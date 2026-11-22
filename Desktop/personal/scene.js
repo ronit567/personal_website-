@@ -1791,4 +1791,5 @@
   }
 
   window.startScene = startScene;
+  startScene.cloudStrip = cloudStrip; // the page builds the high cloud for the trip to the work page with it
 })();

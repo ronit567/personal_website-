@@ -9,10 +9,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..600&display=swap" />
     <link rel="stylesheet" href="styles.css" />
+    <!-- fetched ahead, so the work page is ready the moment the trip up ends -->
+    <link rel="prefetch" href="experience.html" />
+    <script>
+      // arriving from the work page: start up in space, then come down (script at the end of the page)
+      try {
+        if (sessionStorage.getItem("descend")) {
+          sessionStorage.removeItem("descend");
+          document.documentElement.classList.add("in-space", "no-fade");
+        }
+      } catch {}
+    </script>
   </head>
   <body>
     <canvas class="scene" id="scene" aria-hidden="true"></canvas>
     <div class="scene-shade" aria-hidden="true"></div>
+    <!-- the sky above the scene, up into space: only seen on the way to the work page -->
+    <div class="ascent" id="ascent" aria-hidden="true"><canvas class="stars"></canvas></div>
 
     <!-- Icons from Lucide (lucide.dev), ISC license -->
     <header class="top column">
@@ -81,6 +94,7 @@
 
     <script src="contributions.js"></script>
     <script src="scene.js"></script>
+    <script src="stars.js"></script>
     <script>
       const contributions = window.CONTRIBUTIONS;
       const chartFooter = document.getElementById("contributions");
@@ -99,8 +113,12 @@
           { text: "1ST · EXACARE × DATAQUEST", x: 0.78, row: 2 },
           { text: "2ND · SCOTIABANK × CASEHACKS", x: 0.18, row: 4 },
         ],
-        // the chart starts a little below the bio
-        chartTop: () => document.getElementById("intro").getBoundingClientRect().bottom + 22,
+        // the chart starts a little below the bio. Layout offsets, not getBoundingClientRect: during
+        // the trip to and from the work page the whole body is moved, and the chart must not follow.
+        chartTop: () => {
+          const intro = document.getElementById("intro");
+          return intro.offsetTop + intro.offsetHeight + 22;
+        },
         // keep the total and the GitHub link lined up under the chart
         onLayout(chart) {
           chartFooter.hidden = !chart;
@@ -113,6 +131,69 @@
       });
       // the bio can rewrap once its web font arrives, so let the chart follow it
       document.fonts.ready.then(() => scene.relayout());
+    </script>
+
+    <script>
+      // Work: the camera climbs out of the sky, through high cloud, into space (styles.css,
+      // "The trip to the work page"), and the work page opens on the same stars. Home on the
+      // work page (or Back) lands here still up in space, and the camera comes back down.
+      (() => {
+        const root = document.documentElement;
+        const ascent = document.getElementById("ascent");
+        const sky = ascent.querySelector(".stars");
+        new ResizeObserver(() => starfield(sky, 1.5)).observe(sky);
+
+        // made the same way as the scene's clouds, in the colours of the upper sky
+        for (const [name, seed] of [["low", 1171], ["high", 1187]]) {
+          const cloud = startScene.cloudStrip({
+            width: 1280, height: 128, period: 6, rows: 2.4, cover: 0.5, soft: 0.14, alpha: 0.6,
+            shade: "#2b3359", lit: "#a9a3c9", seed,
+          });
+          cloud.className = `ascent-cloud ${name}`;
+          ascent.append(cloud);
+        }
+
+        const link = document.querySelector('a.page-link[href="experience.html"]');
+        let timer = 0;
+        const go = () => {
+          if (!timer) return;
+          clearTimeout(timer);
+          timer = 0;
+          location.href = link.href;
+        };
+        link.addEventListener("click", (e) => {
+          // new-tab clicks and reduced motion just follow the link
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          e.preventDefault();
+          if (timer) return;
+          root.classList.add("travelling", "in-space");
+          timer = setTimeout(go, 2000); // in case the transition never reports back
+        });
+
+        // back on the ground: done travelling, unless a new climb has started meanwhile
+        const land = () => root.classList.contains("in-space") || root.classList.remove("travelling");
+        const descend = () => {
+          root.classList.add("travelling");
+          root.classList.remove("in-space");
+          setTimeout(land, 1800); // in case the transition never reports back
+        };
+        // the clouds' transitions bubble up here too, so check it's the page's own
+        document.body.addEventListener("transitionend", (e) => {
+          if (e.target !== document.body) return;
+          if (root.classList.contains("in-space")) go();
+          else land();
+        });
+        // from the work page's Home link: one frame up in space first, so the move has a start
+        if (root.classList.contains("in-space")) requestAnimationFrame(() => requestAnimationFrame(descend));
+        // Back can restore this page as it was left, up in space
+        window.addEventListener("pageshow", (e) => {
+          if (!e.persisted) return;
+          clearTimeout(timer);
+          timer = 0;
+          descend();
+        });
+      })();
     </script>
   </body>
 </html>

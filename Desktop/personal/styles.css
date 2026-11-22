@@ -54,6 +54,119 @@ body {
   opacity: 0.08;
 }
 
+/* ---- The trip to the work page: the camera climbs out of the sky into space ---- */
+
+/* Small stars (stars.js): behind the work page, and waiting above the home sky */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Two screens stacked above the home scene, off screen until the trip: thinning
+   air that darkens from the sky's top colour (under .scene-shade), then space */
+.ascent {
+  position: fixed;
+  top: -200vh;
+  top: -200lvh;
+  left: 0;
+  width: 100%;
+  height: 200vh;
+  height: 200lvh;
+  z-index: -1;
+  pointer-events: none;
+  overflow-x: clip;
+  background: linear-gradient(to bottom, #000 50%, #04060d 64%, #0c1124 82%, #171e36);
+}
+
+/* the top screen matches the work page star for star; below it they thin out into the air */
+.ascent .stars {
+  position: absolute;
+  height: 150vh;
+  height: 150lvh;
+  z-index: auto;
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent);
+  mask-image: linear-gradient(to bottom, #000 66%, transparent);
+}
+
+/* high cloud to climb through; nearer than the sky, so it falls away faster */
+.ascent-cloud {
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 34vh;
+  height: 34lvh;
+}
+
+.ascent-cloud.low {
+  bottom: -6vh;
+  bottom: -6lvh;
+}
+
+.ascent-cloud.high {
+  bottom: 36vh;
+  bottom: 36lvh;
+  left: -55%;
+  opacity: 0.7;
+}
+
+/* The trip itself. .in-space sinks the whole page two screens, leaving the top of .ascent in
+   view; .travelling animates the move, either way. Going up adds both; coming down from the
+   work page starts with .in-space alone and then swaps it for .travelling. */
+html.in-space,
+html.travelling {
+  overflow: hidden;
+}
+
+html.in-space body {
+  transform: translateY(200vh);
+  transform: translateY(200lvh);
+}
+
+html.in-space .ascent-cloud.low {
+  transform: translateY(60vh);
+}
+
+html.in-space .ascent-cloud.high {
+  transform: translateY(35vh);
+}
+
+html.travelling body,
+html.travelling .ascent-cloud {
+  transition: transform 1.5s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+/* arriving from space, the scene is already there: no fade-in */
+html.no-fade .scene,
+html.no-fade .top,
+html.no-fade .intro,
+html.no-fade .contributions {
+  animation: none;
+}
+
+/* Leaving the work page for home: the page clears, down to the stars */
+html.leaving .top,
+html.leaving .page {
+  animation: space-out 0.28s ease-in forwards;
+}
+
+@keyframes space-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* and arriving on it, the page comes in quicker than the home scene does */
+html.plain .top,
+html.plain .page {
+  animation-duration: 0.3s;
+}
+
 /* Everything lines up in one centred column. scene.js lays the contribution
    chart out in this same column, so keep the two in step. */
 .column {
@@ -295,45 +408,38 @@ html.plain .column {
 
 .exp {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
-  gap: 40px 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  gap: 32px 64px;
   align-items: center;
-  padding-top: 48px;
+  padding-top: 20px; /* compact, so the first projects already show without scrolling */
 }
 
 .page .display {
   margin: 0;
   font-family: var(--sign-font);
   font-weight: 800;
-  font-size: clamp(64px, 9vw, 120px);
+  font-size: clamp(56px, 7vw, 96px);
   line-height: 0.85;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
-.rule {
-  height: 0;
-  margin: 36px 0 28px;
-  border: 0;
-  border-top: 1px solid rgba(242, 238, 230, 0.16);
-}
-
 .page .section-title {
-  margin: 0 0 48px;
+  margin: 0 0 28px;
   font-family: var(--sign-font);
   font-weight: 800;
-  font-size: clamp(44px, 5vw, 64px);
+  font-size: clamp(40px, 4vw, 52px);
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
-/* roles hang off a thin line, newest first */
+/* roles hang off a thin line that fades out into space, newest first */
 .timeline {
   list-style: none;
-  margin: 40px 0 0;
-  padding: 0 0 0 28px;
-  border-left: 1px solid rgba(242, 238, 230, 0.16);
+  margin: 24px 0 0;
+  padding: 0 0 8px 32px;
+  background: linear-gradient(to bottom, rgba(242, 238, 230, 0.32) 60%, transparent) left top / 1px 100% no-repeat;
 }
 
 .role {
@@ -341,19 +447,19 @@ html.plain .column {
 }
 
 .role + .role {
-  margin-top: 44px;
+  margin-top: 32px;
 }
 
 .role::before {
   content: "";
   position: absolute;
-  left: -33px;
-  top: 8px;
+  left: -36px; /* centred on the line */
+  top: 10px;
   width: 9px;
   height: 9px;
   border-radius: 50%;
   background: #000;
-  box-shadow: inset 0 0 0 1.5px rgba(242, 238, 230, 0.45);
+  box-shadow: inset 0 0 0 1.5px rgba(242, 238, 230, 0.6);
 }
 
 .role.is-current::before {
@@ -372,28 +478,60 @@ html.plain .column {
 
 .role h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.page .role-when,
-.page .role-org {
-  font-size: 14px;
-  color: var(--muted);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
 }
 
 .page .role-when {
+  font-size: 14px;
   font-variant-numeric: tabular-nums;
+  color: var(--muted);
 }
 
+/* the company in gold, as the projects' awards are; where it is, quieter */
 .page .role-org {
-  margin-top: 2px;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--muted);
 }
 
-.page .role-what {
-  margin-top: 10px;
+.role-org strong {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+/* what each role did: short lines, each led by a dash */
+.role-what {
+  max-width: 68ch;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.role-what li {
+  position: relative;
+  padding-left: 20px;
   font-size: 15px;
+  line-height: 1.55;
+  color: rgba(242, 238, 230, 0.8);
+  text-wrap: pretty;
+}
+
+.role-what li + li {
+  margin-top: 6px;
+}
+
+.role-what li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 8px;
+  height: 1px;
+  background: rgba(242, 238, 230, 0.45);
 }
 
 @media (max-width: 860px) {
@@ -415,8 +553,10 @@ html.plain .column {
   animation: scene-in 1.6s ease-out both;
 }
 
-.projects-head .rule {
-  margin: 112px 0 40px;
+.projects-head {
+  margin-top: 36px; /* space above the line; margin + padding = 72px keeps the heading in place */
+  border-top: 1px solid rgba(242, 238, 230, 0.35);
+  padding-top: 36px;
 }
 
 .projects {
@@ -669,43 +809,6 @@ html.plain .column {
   80%, 100% { opacity: 0; }
 }
 
-/* TrendID: views climb, the trend is caught, the listing updates */
-.art-trend .spark {
-  stroke: var(--gold);
-  stroke-width: 2;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw-line 4.5s ease-out infinite;
-}
-
-.art-trend .peak {
-  fill: var(--gold);
-  stroke: none;
-  opacity: 0;
-  animation: pop 4.5s ease-out infinite;
-}
-
-.art-trend .tag {
-  opacity: 0;
-  animation: pop 4.5s ease-out infinite;
-  animation-delay: 0.3s;
-}
-
-.art-trend .tag rect {
-  fill: rgba(242, 238, 230, 0.06);
-  stroke: rgba(242, 238, 230, 0.35);
-}
-
-.art-trend .tag text {
-  fill: rgba(242, 238, 230, 0.85);
-}
-
-@keyframes pop {
-  0%, 50% { opacity: 0; }
-  60%, 88% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @media (max-width: 860px) {
   .projects {
     grid-template-columns: 1fr;
@@ -723,8 +826,6 @@ html.plain .column {
     fill: #f0854f;
   }
 
-  .art-trend .peak,
-  .art-trend .tag,
   .art-ghost .strike {
     opacity: 1;
   }

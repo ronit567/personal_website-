@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- space: the same stars the trip up from the home page ends on -->
+    <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+    <script src="stars.js"></script>
+    <script>
+      new ResizeObserver(([entry]) => starfield(entry.target)).observe(document.getElementById("stars"));
+    </script>
+
     <!-- Icons from Lucide (lucide.dev), ISC license -->
     <header class="top column">
       <a class="page-link back-link" href="index.html">
@@ -61,19 +68,25 @@
         <ol class="timeline">
           <li class="role">
             <div class="role-head">
-              <h2>Software &amp; Network Engineer</h2>
+              <h2>Software Engineer</h2>
               <p class="role-when">May 2026 – Nov 2026</p>
             </div>
-            <p class="role-org">CAPREIT, Toronto, Ontario</p>
-            <p class="role-what">Built a property analytics dashboard and automated network monitoring across 100+ sites.</p>
+            <p class="role-org"><strong>CAPREIT</strong> · Toronto, Ontario</p>
+            <ul class="role-what">
+              <li>Built an internal analytics app (Python, Streamlit, PostgreSQL) comparing financials across 250+ assets, used by 95% of the team.</li>
+              <li>Wrote a Python service on the Cisco Meraki API that tracks uptime across 100+ sites, catching outages before tenants report them.</li>
+            </ul>
           </li>
           <li class="role">
             <div class="role-head">
               <h2>Research Assistant</h2>
               <p class="role-when">Dec 2025 – Apr 2026</p>
             </div>
-            <p class="role-org">Centre for Brain &amp; Mind, London, Ontario</p>
-            <p class="role-what">Built a Unity spatial audio system for a 32-speaker Audiodome.</p>
+            <p class="role-org"><strong>Centre for Brain &amp; Mind</strong> · London, Ontario</p>
+            <ul class="role-what">
+              <li>Researched LLM hallucinations against human false-memory formation with probabilistic language modeling.</li>
+              <li>Built Unity control software for a 32-speaker spatial audio Audiodome.</li>
+            </ul>
           </li>
         </ol>
       </div>
@@ -90,7 +103,6 @@
          by a clip of the real thing where one exists. -->
     <section class="page projects-wrap" aria-labelledby="projects-title">
       <div class="column projects-head">
-        <hr class="rule" />
         <h2 class="section-title" id="projects-title">Projects</h2>
       </div>
       <ul class="projects column">
@@ -231,6 +243,24 @@
 
         <li class="project">
           <div class="project-text">
+            <h3>RescueWindow</h3>
+            <p class="project-note">1st place, Exacare × WAI DataQuest</p>
+            <p class="project-what">
+              Flags sepsis from routine ICU vitals while it can still be reversed. XGBoost and GRU models feed a
+              fusion stacker for one calibrated risk score: 0.91 AUROC, warning about 6 hours before onset.
+            </p>
+            <p class="project-stack">Python, XGBoost, GRU, SHAP</p>
+            <p class="project-links">
+              <a href="https://github.com/lblommesteyn/dataquest2026" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+            </p>
+          </div>
+          <div class="project-visual" aria-hidden="true">
+            <video class="project-media" src="rescuewindow.mp4" muted loop playsinline autoplay></video>
+          </div>
+        </li>
+
+        <li class="project">
+          <div class="project-text">
             <h3>I.N.T.A.C.T.</h3>
             <p class="project-note">Interpretability research</p>
             <p class="project-what">
@@ -252,35 +282,29 @@
             <img class="project-media on-white" src="intact_animation.gif" alt="" />
           </div>
         </li>
-
-        <li class="project">
-          <div class="project-text">
-            <h3>TrendID</h3>
-            <p class="project-note">2nd place, UofT 13 Hacks</p>
-            <p class="project-what">
-              Pulls trend tags from Perplexity Sonar, finds the fastest-growing YouTube videos for them, analyzes
-              those videos with TwelveLabs, and rewrites Shopify listings through the Admin GraphQL API.
-            </p>
-            <p class="project-stack">Python, Node.js, MongoDB, Shopify API, GCP</p>
-            <p class="project-links">
-              <a href="https://github.com/andrew-canada/TrendID" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
-            </p>
-          </div>
-          <div class="project-visual" aria-hidden="true">
-            <svg class="project-art art-trend" viewBox="0 0 320 180">
-              <line class="axis" x1="24" y1="140" x2="300" y2="140" />
-              <path class="spark" pathLength="1" d="M24 128 L60 122 L92 126 L124 112 L156 116 L188 96 L220 74 L252 52 L282 34" />
-              <circle class="peak" cx="282" cy="34" r="5" />
-              <g class="tag">
-                <rect x="176" y="100" width="118" height="28" rx="6" />
-                <text x="235" y="118" text-anchor="middle">listing updated</text>
-              </g>
-              <text x="24" y="162">views</text>
-            </svg>
-          </div>
-        </li>
       </ul>
     </section>
+
+    <script>
+      // Home: the page clears, leaving the stars; the home page opens up here and comes back down
+      (() => {
+        const root = document.documentElement;
+        const home = document.querySelector(".back-link");
+        home.addEventListener("click", (e) => {
+          // new-tab clicks and reduced motion just follow the link
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          e.preventDefault();
+          try {
+            sessionStorage.setItem("descend", "1");
+          } catch {}
+          root.classList.add("leaving");
+          setTimeout(() => (location.href = home.href), 280);
+        });
+        // Forward can restore this page as it was left, cleared
+        window.addEventListener("pageshow", (e) => e.persisted && root.classList.remove("leaving"));
+      })();
+    </script>
 
     <script>
       // The swipe: a brush head glides after the pointer (eased, so a jittery mouse still draws a
