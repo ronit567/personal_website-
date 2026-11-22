@@ -1,0 +1,783 @@
+/* Shared by every page: the sky behind everything, the top bar, and the
+   column the pages are laid out in. */
+
+/* The colour goes on html only: on body it would paint over the scene behind it */
+html {
+  background: #141d38;
+}
+
+/* Pages without the landscape, like Experience, are plain black */
+html.plain {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  color: #f2eee6;
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* The scene sits behind all content and never takes clicks. */
+.scene,
+.scene-shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh; /* stays put when mobile toolbars slide away */
+  pointer-events: none;
+}
+
+.scene {
+  display: block;
+  z-index: -2;
+  animation: scene-in 1.6s ease-out both;
+}
+
+/* Darkens the top for text, softens the corners, and adds a little film grain. */
+.scene-shade {
+  z-index: -1;
+  background:
+    linear-gradient(to bottom, rgba(10, 12, 32, 0.3), transparent 38%),
+    linear-gradient(to top, rgba(14, 16, 34, 0.32), transparent 30%),
+    radial-gradient(140% 110% at 50% 45%, transparent 60%, rgba(10, 8, 22, 0.45));
+}
+
+.scene-shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")
+    0 0 / 200px;
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+}
+
+/* Everything lines up in one centred column. scene.js lays the contribution
+   chart out in this same column, so keep the two in step. */
+.column {
+  box-sizing: border-box; /* padding stays inside the column instead of widening it */
+  width: min(800px, 100% - 48px);
+  margin-inline: auto;
+}
+
+/* The work page shows wide project media, so its column (top bar included) is wider */
+html.plain .column {
+  width: min(1120px, 100% - 48px);
+}
+
+/* Top bar: the same links at the column's right edge on every page, plus a
+   way home at the left on inner pages */
+.top {
+  display: flex;
+  align-items: center;
+  padding-top: 16px;
+  animation: scene-in 1.6s ease-out both;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: -10px; /* the last link's padding, so its text meets the column's edge */
+}
+
+.back-link {
+  margin-left: -10px; /* likewise at the left edge */
+}
+
+.top a {
+  color: rgba(226, 230, 248, 0.72);
+  text-decoration: none;
+  border-radius: 8px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.top a:hover,
+.top a[aria-current="page"] {
+  color: #fff;
+}
+
+.top a:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.top a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+}
+
+.top svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-link {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 8px;
+  background: rgba(226, 230, 248, 0.2);
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.page-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+
+.page-link:hover .forward {
+  transform: translateX(2px);
+}
+
+.page-link:hover .back {
+  transform: translateX(-2px);
+}
+
+/* Phones: tighten the top bar so Home + icons + Experience fit on one line */
+@media (max-width: 420px) {
+  .links {
+    gap: 0;
+  }
+
+  .icon-link {
+    width: 36px;
+  }
+
+  .divider {
+    margin: 0 4px;
+  }
+}
+
+/* Under the star chart: the year's total and a link to GitHub. The script
+   positions it from the scene's layout, so it stays lined up with the chart. */
+.contributions {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(226, 230, 248, 0.75);
+  text-shadow: var(--text-halo);
+  animation: scene-in 1.6s ease-out both;
+}
+
+.contributions[hidden] {
+  display: none;
+}
+
+.contributions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: rgba(226, 230, 248, 0.9);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contributions a:hover {
+  color: #fff;
+}
+
+.contributions a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* The short intro under the top bar, in the darkest (most readable) part of the sky.
+   It spans exactly the chart below: scene.js leaves a 30px gutter at the column's
+   left for the Mon / Wed / Fri labels, and the squares start just after it. */
+.intro {
+  padding-top: 4px;
+  padding-left: 32px;
+  animation: scene-in 1.6s ease-out both;
+}
+
+.intro p {
+  margin: 0 0 6px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(242, 238, 230, 0.86);
+  text-wrap: pretty;
+  text-shadow: var(--text-halo);
+}
+
+/* A soft dark halo, so text stays readable over a passing cloud or the sun's glow */
+:root {
+  --text-halo: 0 0 12px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.intro strong {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* For screen readers and search engines only: on the home page the name is
+   painted into the scene, which they can't read. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A page of text over the sky */
+.page {
+  padding-top: 72px;
+  animation: scene-in 1.6s ease-out both;
+}
+
+.page h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.page p {
+  max-width: 60ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(242, 238, 230, 0.8);
+}
+
+.page a {
+  color: inherit;
+  text-decoration-color: rgba(242, 238, 230, 0.4);
+  text-underline-offset: 3px;
+}
+
+.page a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- Experience page: black, with the hill sign's lettering for the headlines ---- */
+
+:root {
+  --sign-font: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif; /* as SIGN_FONT in scene.js */
+  --gold: #ffcf8a; /* the low sun on the home page */
+  --silver: #c9cfdd;
+  --muted: rgba(242, 238, 230, 0.55);
+}
+
+.exp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 40px 64px;
+  align-items: center;
+  padding-top: 48px;
+}
+
+.page .display {
+  margin: 0;
+  font-family: var(--sign-font);
+  font-weight: 800;
+  font-size: clamp(64px, 9vw, 120px);
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.rule {
+  height: 0;
+  margin: 36px 0 28px;
+  border: 0;
+  border-top: 1px solid rgba(242, 238, 230, 0.16);
+}
+
+.page .section-title {
+  margin: 0 0 48px;
+  font-family: var(--sign-font);
+  font-weight: 800;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* roles hang off a thin line, newest first */
+.timeline {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0 0 0 28px;
+  border-left: 1px solid rgba(242, 238, 230, 0.16);
+}
+
+.role {
+  position: relative;
+}
+
+.role + .role {
+  margin-top: 44px;
+}
+
+.role::before {
+  content: "";
+  position: absolute;
+  left: -33px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: inset 0 0 0 1.5px rgba(242, 238, 230, 0.45);
+}
+
+.role.is-current::before {
+  background: var(--gold);
+  box-shadow: none;
+}
+
+/* title and dates share a line while there's room */
+.role-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2px 24px;
+}
+
+.role h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.page .role-when,
+.page .role-org {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.page .role-when {
+  font-variant-numeric: tabular-nums;
+}
+
+.page .role-org {
+  margin-top: 2px;
+}
+
+.page .role-what {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+@media (max-width: 860px) {
+  .exp {
+    grid-template-columns: 1fr;
+  }
+
+  .exp .portrait {
+    order: -1;
+    width: min(320px, 85%);
+  }
+}
+
+/* ---- Projects: two columns of cards, the clip on top and the write-up under it ---- */
+
+.projects-wrap {
+  padding-top: 0; /* shares the page text styles, not the page's top spacing */
+  padding-bottom: 120px;
+  animation: scene-in 1.6s ease-out both;
+}
+
+.projects-head .rule {
+  margin: 112px 0 40px;
+}
+
+.projects {
+  --line: 1px solid rgba(242, 238, 230, 0.14);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 80px 56px;
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-visual {
+  order: -1; /* the clip leads; the text stays first in the markup for screen readers */
+  margin-bottom: 28px;
+}
+
+.project h3 {
+  margin: 0;
+  font-family: var(--sign-font);
+  font-weight: 800;
+  font-size: clamp(32px, 3.2vw, 44px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.page .project-note {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--gold);
+}
+
+.page .project-what {
+  max-width: 58ch;
+  margin-top: 16px;
+  font-size: 16px;
+}
+
+.page .project-stack {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.page .project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #f2eee6;
+}
+
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(242, 238, 230, 0.3);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.page .project-links a:hover {
+  color: var(--gold);
+  border-color: currentColor;
+}
+
+.project-links a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.project-links svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.project-links .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.project-links .status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* the picture: a diagram, covered by the real clip where there is one */
+.project-visual {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b0b0c;
+}
+
+/* a chart drawn on white, flipped to sit dark like the others (hue-rotate keeps its colours) */
+.project-media.on-white {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.project-art,
+.project-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.35s ease;
+}
+
+.project-media {
+  object-fit: cover;
+  background: #000;
+}
+
+.project-visual:has(.project-media) .project-art {
+  opacity: 0;
+}
+
+/* diagram drawing style */
+.project-art {
+  fill: none;
+  stroke: rgba(242, 238, 230, 0.5);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.project-art text {
+  fill: var(--muted);
+  stroke: none;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.project-art .axis {
+  stroke: rgba(242, 238, 230, 0.2);
+}
+
+/* B.A.I.L.I.F.F.: verdicts that flip when only the name changes */
+.art-bailiff rect {
+  fill: rgba(242, 238, 230, 0.1);
+  stroke: none;
+}
+
+.art-bailiff .flip {
+  animation: verdict-flip 5s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+.art-bailiff .flip-count {
+  fill: #f0854f;
+}
+
+@keyframes verdict-flip {
+  0%, 20% { fill: rgba(242, 238, 230, 0.1); }
+  32%, 80% { fill: #f0854f; }
+  92%, 100% { fill: rgba(242, 238, 230, 0.1); }
+}
+
+/* I.N.T.A.C.T.: as bits drop, the benchmark holds and then falls; the circuit line wobbles */
+.art-intact .benchmark,
+.art-intact .circuit {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 5s ease-in-out infinite;
+}
+
+.art-intact .benchmark {
+  stroke: #f0854f;
+  stroke-width: 2;
+}
+
+.art-intact .circuit {
+  stroke: #6cc4a1;
+  animation-delay: 0.25s;
+}
+
+.art-intact .bits {
+  animation: blink-label 5s ease-in-out infinite;
+}
+
+@keyframes draw-line {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  55%, 85% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes blink-label {
+  0%, 10% { opacity: 0; }
+  25%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Ghost Tape: two fighters circling in the cage, trading strikes */
+.art-ghost .cage {
+  stroke: rgba(242, 238, 230, 0.3);
+}
+
+.art-ghost .fighters {
+  transform-origin: 160px 90px;
+  animation: circle 9s linear infinite;
+}
+
+.art-ghost .red {
+  fill: #e0654a;
+  stroke: none;
+}
+
+.art-ghost .blue {
+  fill: #5b8bd9;
+  stroke: none;
+}
+
+.art-ghost .strike {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  opacity: 0;
+  animation: strike 1.8s ease-out infinite;
+}
+
+@keyframes circle {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes strike {
+  0%, 60% { opacity: 0; }
+  66% { opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+
+/* TrendID: views climb, the trend is caught, the listing updates */
+.art-trend .spark {
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 4.5s ease-out infinite;
+}
+
+.art-trend .peak {
+  fill: var(--gold);
+  stroke: none;
+  opacity: 0;
+  animation: pop 4.5s ease-out infinite;
+}
+
+.art-trend .tag {
+  opacity: 0;
+  animation: pop 4.5s ease-out infinite;
+  animation-delay: 0.3s;
+}
+
+.art-trend .tag rect {
+  fill: rgba(242, 238, 230, 0.06);
+  stroke: rgba(242, 238, 230, 0.35);
+}
+
+.art-trend .tag text {
+  fill: rgba(242, 238, 230, 0.85);
+}
+
+@keyframes pop {
+  0%, 50% { opacity: 0; }
+  60%, 88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 860px) {
+  .projects {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-art * {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .art-bailiff .flip {
+    fill: #f0854f;
+  }
+
+  .art-trend .peak,
+  .art-trend .tag,
+  .art-ghost .strike {
+    opacity: 1;
+  }
+}
+
+/* The cartoon, with a canvas on top where the page's script paints the real photo
+   along the pointer's trail */
+.portrait {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  outline-offset: 4px;
+  touch-action: none; /* dragging a finger over it draws the trail instead of scrolling */
+}
+
+.portrait img,
+.portrait canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.portrait img {
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.portrait canvas {
+  pointer-events: none;
+}
+
+.portrait:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+@keyframes scene-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .top,
+  .intro,
+  .contributions,
+  .page {
+    animation: none;
+  }
+
+  .page-link svg,
+  .portrait {
+    transition: none;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "buried-raster",
+        "value": "*",
+        "files": [
+          "experience.html"
+        ],
+        "createdAt": "2026-11-18T23:00:28.105Z",
+        "reason": "user requested: project clips (GIF/videos) start at opacity 0 and are shown on hover/focus/tap of their project; verified opacity 1 and playing while hovered"
+      }
+    ]
+  }
+}

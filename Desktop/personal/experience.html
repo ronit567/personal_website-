@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en" class="plain">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <title>Work | Ronit Longia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..600&display=swap" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Icons from Lucide (lucide.dev), ISC license -->
+    <header class="top column">
+      <a class="page-link back-link" href="index.html">
+        <svg class="back" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m12 19-7-7 7-7" />
+          <path d="M19 12H5" />
+        </svg>
+        Home
+      </a>
+      <nav class="links" aria-label="Links">
+        <a class="icon-link" href="mailto:ronlongia@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </a>
+        <a class="icon-link" href="https://github.com/ronit567" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+            />
+            <path d="M9 18c-4.51 2-5-2-7-2" />
+          </svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/ronit-longia/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect width="4" height="12" x="2" y="9" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+        </a>
+        <span class="divider" aria-hidden="true"></span>
+        <a class="page-link" href="experience.html" aria-current="page">
+          Work
+          <svg class="forward" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main class="page column exp">
+      <div class="exp-main">
+        <h1 class="display display-sm">Work</h1>
+
+        <!-- newest first -->
+        <ol class="timeline">
+          <li class="role">
+            <div class="role-head">
+              <h2>Software &amp; Network Engineer</h2>
+              <p class="role-when">May 2026 – Nov 2026</p>
+            </div>
+            <p class="role-org">CAPREIT, Toronto, Ontario</p>
+            <p class="role-what">Built a property analytics dashboard and automated network monitoring across 100+ sites.</p>
+          </li>
+          <li class="role">
+            <div class="role-head">
+              <h2>Research Assistant</h2>
+              <p class="role-when">Dec 2025 – Apr 2026</p>
+            </div>
+            <p class="role-org">Centre for Brain &amp; Mind, London, Ontario</p>
+            <p class="role-what">Built a Unity spatial audio system for a 32-speaker Audiodome.</p>
+          </li>
+        </ol>
+      </div>
+
+      <!-- the cartoon; moving the pointer over it paints a stroke that shows the real photo -->
+      <div class="portrait" id="portrait" tabindex="0">
+        <img src="picture.png" alt="Cartoon of Ronit working on a laptop" />
+        <canvas aria-hidden="true"></canvas>
+      </div>
+
+    </main>
+
+    <!-- four projects in two columns. Each has a small animated diagram of what it does, covered
+         by a clip of the real thing where one exists. -->
+    <section class="page projects-wrap" aria-labelledby="projects-title">
+      <div class="column projects-head">
+        <hr class="rule" />
+        <h2 class="section-title" id="projects-title">Projects</h2>
+      </div>
+      <ul class="projects column">
+        <li class="project">
+          <div class="project-text">
+            <h3>B.A.I.L.I.F.F.</h3>
+            <p class="project-note">Best Research Paper, CUCAI 2026</p>
+            <p class="project-what">
+              Multi-agent LLM mini-trials (judge, prosecution, defense) run as paired counterfactuals that change
+              only the defendant's name. Up to 38% of verdicts flip, measured by flip rate and paired McNemar tests.
+            </p>
+            <p class="project-stack">Python, LangChain, Groq, Gemini</p>
+            <p class="project-links">
+              <a href="https://drive.google.com/file/d/1ykQfEl151U6b6EBgrmngTB0yJsYBm-n-/view" target="_blank" rel="noopener">Paper <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+              <a href="https://github.com/Western-Artificial-Intelligence/ai-law-agents" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+            </p>
+          </div>
+          <div class="project-visual" aria-hidden="true">
+            <svg class="project-art art-bailiff" viewBox="0 0 320 180">
+              <g class="verdicts">
+                <rect x="20" y="22" width="16" height="16" rx="3" />
+                <rect x="41" y="22" width="16" height="16" rx="3" />
+                <rect x="62" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.08s" x="83" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.35s" x="104" y="22" width="16" height="16" rx="3" />
+                <rect x="125" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.89s" x="146" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.21s" x="167" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.67s" x="188" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.87s" x="209" y="22" width="16" height="16" rx="3" />
+                <rect x="230" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.91s" x="251" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.90s" x="272" y="22" width="16" height="16" rx="3" />
+                <rect x="293" y="22" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:1.09s" x="20" y="43" width="16" height="16" rx="3" />
+                <rect x="41" y="43" width="16" height="16" rx="3" />
+                <rect x="62" y="43" width="16" height="16" rx="3" />
+                <rect x="83" y="43" width="16" height="16" rx="3" />
+                <rect x="104" y="43" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.16s" x="125" y="43" width="16" height="16" rx="3" />
+                <rect x="146" y="43" width="16" height="16" rx="3" />
+                <rect x="167" y="43" width="16" height="16" rx="3" />
+                <rect x="188" y="43" width="16" height="16" rx="3" />
+                <rect x="209" y="43" width="16" height="16" rx="3" />
+                <rect x="230" y="43" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.91s" x="251" y="43" width="16" height="16" rx="3" />
+                <rect x="272" y="43" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.30s" x="293" y="43" width="16" height="16" rx="3" />
+                <rect x="20" y="64" width="16" height="16" rx="3" />
+                <rect x="41" y="64" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.16s" x="62" y="64" width="16" height="16" rx="3" />
+                <rect x="83" y="64" width="16" height="16" rx="3" />
+                <rect x="104" y="64" width="16" height="16" rx="3" />
+                <rect x="125" y="64" width="16" height="16" rx="3" />
+                <rect x="146" y="64" width="16" height="16" rx="3" />
+                <rect x="167" y="64" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:1.14s" x="188" y="64" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.90s" x="209" y="64" width="16" height="16" rx="3" />
+                <rect x="230" y="64" width="16" height="16" rx="3" />
+                <rect x="251" y="64" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.99s" x="272" y="64" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.79s" x="293" y="64" width="16" height="16" rx="3" />
+                <rect x="20" y="85" width="16" height="16" rx="3" />
+                <rect x="41" y="85" width="16" height="16" rx="3" />
+                <rect x="62" y="85" width="16" height="16" rx="3" />
+                <rect x="83" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.85s" x="104" y="85" width="16" height="16" rx="3" />
+                <rect x="125" y="85" width="16" height="16" rx="3" />
+                <rect x="146" y="85" width="16" height="16" rx="3" />
+                <rect x="167" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:1.24s" x="188" y="85" width="16" height="16" rx="3" />
+                <rect x="209" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.74s" x="230" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:1.48s" x="251" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.58s" x="272" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.40s" x="293" y="85" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.29s" x="20" y="106" width="16" height="16" rx="3" />
+                <rect x="41" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:1.25s" x="62" y="106" width="16" height="16" rx="3" />
+                <rect x="83" y="106" width="16" height="16" rx="3" />
+                <rect x="104" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.13s" x="125" y="106" width="16" height="16" rx="3" />
+                <rect x="146" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.48s" x="167" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.79s" x="188" y="106" width="16" height="16" rx="3" />
+                <rect x="209" y="106" width="16" height="16" rx="3" />
+                <rect x="230" y="106" width="16" height="16" rx="3" />
+                <rect x="251" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.55s" x="272" y="106" width="16" height="16" rx="3" />
+                <rect x="293" y="106" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.72s" x="20" y="127" width="16" height="16" rx="3" />
+                <rect x="41" y="127" width="16" height="16" rx="3" />
+                <rect x="62" y="127" width="16" height="16" rx="3" />
+                <rect x="83" y="127" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.97s" x="104" y="127" width="16" height="16" rx="3" />
+                <rect class="flip" style="--d:0.12s" x="125" y="127" width="16" height="16" rx="3" />
+                <rect x="146" y="127" width="16" height="16" rx="3" />
+                <rect x="167" y="127" width="16" height="16" rx="3" />
+                <rect x="188" y="127" width="16" height="16" rx="3" />
+                <rect x="209" y="127" width="16" height="16" rx="3" />
+                <rect x="230" y="127" width="16" height="16" rx="3" />
+                <rect x="251" y="127" width="16" height="16" rx="3" />
+                <rect x="272" y="127" width="16" height="16" rx="3" />
+                <rect x="293" y="127" width="16" height="16" rx="3" />
+              </g>
+              <text x="20" y="166">same case, new name</text>
+              <text class="flip-count" x="300" y="166" text-anchor="end">verdict flipped</text>
+            </svg>
+            <video class="project-media" src="bailiff-verdict-flips.mp4" muted loop playsinline autoplay></video>
+          </div>
+        </li>
+
+        <li class="project">
+          <div class="project-text">
+            <h3>Ghost Tape</h3>
+            <p class="project-note">3D fight replays</p>
+            <p class="project-what">
+              Recovers both fighters' 3D body motion from broadcast footage with GVHMR on cloud GPUs, places them in
+              a shared world frame, and replays the fight from either fighter's eyes.
+            </p>
+            <p class="project-stack">Python, GVHMR, Modal</p>
+            <p class="project-links">
+              <a href="https://github.com/ronit567/UFC_Siloutte" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+            </p>
+          </div>
+          <div class="project-visual" aria-hidden="true">
+            <svg class="project-art art-ghost" viewBox="0 0 320 180">
+              <polygon class="cage" points="128,22 192,22 237,67 237,113 192,158 128,158 83,113 83,67" />
+              <g class="fighters">
+                <circle class="red" cx="186" cy="90" r="11" />
+                <circle class="blue" cx="134" cy="90" r="11" />
+                <line class="strike" x1="146" y1="90" x2="174" y2="90" />
+              </g>
+            </svg>
+            <video class="project-media" src="ufc.mov" muted loop playsinline autoplay></video>
+          </div>
+        </li>
+
+        <li class="project">
+          <div class="project-text">
+            <h3>I.N.T.A.C.T.</h3>
+            <p class="project-note">Interpretability research</p>
+            <p class="project-what">
+              Quantizes GPT-2 small to fewer and fewer bits, then uses activation patching to test whether its IOI
+              and induction circuits still work. The benchmark score hides the damage.
+            </p>
+            <p class="project-stack">Python, PyTorch, TransformerLens</p>
+            <p class="project-links"><span class="status">In production</span></p>
+          </div>
+          <div class="project-visual" aria-hidden="true">
+            <svg class="project-art art-intact" viewBox="0 0 320 180">
+              <line class="axis" x1="24" y1="140" x2="300" y2="140" />
+              <path class="benchmark" pathLength="1" d="M24 40 L120 40 L170 42 L215 48 L255 90 L296 132" />
+              <path class="circuit" pathLength="1" d="M24 62 L120 62 L170 66 L215 60 L255 44 L296 96" />
+              <text x="24" y="162">32-bit</text>
+              <text x="296" y="162" text-anchor="end">3-bit</text>
+              <text class="bits" x="160" y="162" text-anchor="middle">fewer bits →</text>
+            </svg>
+            <img class="project-media on-white" src="intact_animation.gif" alt="" />
+          </div>
+        </li>
+
+        <li class="project">
+          <div class="project-text">
+            <h3>TrendID</h3>
+            <p class="project-note">2nd place, UofT 13 Hacks</p>
+            <p class="project-what">
+              Pulls trend tags from Perplexity Sonar, finds the fastest-growing YouTube videos for them, analyzes
+              those videos with TwelveLabs, and rewrites Shopify listings through the Admin GraphQL API.
+            </p>
+            <p class="project-stack">Python, Node.js, MongoDB, Shopify API, GCP</p>
+            <p class="project-links">
+              <a href="https://github.com/andrew-canada/TrendID" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+            </p>
+          </div>
+          <div class="project-visual" aria-hidden="true">
+            <svg class="project-art art-trend" viewBox="0 0 320 180">
+              <line class="axis" x1="24" y1="140" x2="300" y2="140" />
+              <path class="spark" pathLength="1" d="M24 128 L60 122 L92 126 L124 112 L156 116 L188 96 L220 74 L252 52 L282 34" />
+              <circle class="peak" cx="282" cy="34" r="5" />
+              <g class="tag">
+                <rect x="176" y="100" width="118" height="28" rx="6" />
+                <text x="235" y="118" text-anchor="middle">listing updated</text>
+              </g>
+              <text x="24" y="162">views</text>
+            </svg>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <script>
+      // The swipe: a brush head glides after the pointer (eased, so a jittery mouse still draws a
+      // smooth line) and leaves a trail. Inside the trail only the real photo shows (on black, so the
+      // cartoon never shows through), outside only the cartoon. The brush is thicker when you swipe
+      // fast, and the trail shrinks to a point and fades within LIFE ms. A resting pointer draws
+      // nothing. Keyboard focus shows a still stroke across the face.
+      (() => {
+        const LIFE = 900;
+        const WIDTH = 0.2; // brush diameter at full speed, as a share of the picture's size
+        // the photo is nudged so its face sits over the cartoon's (measured by overlaying them)
+        const NUDGE_X = -0.046;
+        const NUDGE_Y = -0.018;
+
+        const portrait = document.getElementById("portrait");
+        const canvas = portrait.querySelector("canvas");
+        const g = canvas.getContext("2d");
+        const mask = document.createElement("canvas");
+        const m = mask.getContext("2d");
+        const photo = new Image();
+        photo.src = "real-cutout.png";
+
+        let size = 0;
+        let trail = []; // { x, y, r, t, start }: r = brush radius, t = birth time (Infinity: never fades)
+        let target = null; // the pointer's latest position
+        let head = null; // the brush, easing towards it
+        let speed = 0;
+        let raf = 0;
+
+        function fit() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          size = portrait.clientWidth;
+          canvas.width = mask.width = Math.round(size * dpr);
+          canvas.height = mask.height = Math.round(size * dpr);
+          g.setTransform(dpr, 0, 0, dpr, 0, 0);
+          m.setTransform(dpr, 0, 0, dpr, 0, 0);
+          kick();
+        }
+
+        function step(now) {
+          if (target && now - target.t < 70) {
+            const first = !head;
+            if (first) head = { x: target.x, y: target.y };
+            const px = head.x;
+            const py = head.y;
+            head.x += (target.x - head.x) * 0.4;
+            head.y += (target.y - head.y) * 0.4;
+            const d = Math.hypot(head.x - px, head.y - py);
+            speed += (d - speed) * 0.3;
+            if (first || d > 0.2) {
+              const r = (size * WIDTH * (0.5 + 0.5 * Math.min(speed / 12, 1))) / 2;
+              trail.push({ x: head.x, y: head.y, r, t: now, start: first });
+            }
+          } else {
+            head = null; // the next swipe starts fresh, with no line back to the last one
+            speed = 0;
+          }
+          trail = trail.filter((p) => p.t === Infinity || now - p.t < LIFE);
+        }
+
+        // radius left at a given age: shrinks to nothing, slowly at first
+        const scale = (p, now) => (p.t === Infinity ? 1 : Math.pow(1 - (now - p.t) / LIFE, 1.4));
+
+        function draw(now) {
+          g.clearRect(0, 0, size, size);
+          if (!trail.length || !photo.complete || !photo.naturalWidth) return;
+
+          // the trail as one opaque shape: circles every pixel or so, so edges are smooth
+          m.clearRect(0, 0, size, size);
+          m.fillStyle = "#000";
+          m.beginPath();
+          const dot = (x, y, r) => {
+            m.moveTo(x + r, y);
+            m.arc(x, y, r, 0, Math.PI * 2);
+          };
+          for (let i = 0; i < trail.length; i++) {
+            const p = trail[i];
+            const r1 = p.r * scale(p, now);
+            if (i > 0 && !p.start) {
+              const q = trail[i - 1];
+              const r0 = q.r * scale(q, now);
+              const n = Math.ceil(Math.hypot(p.x - q.x, p.y - q.y) / Math.max(1.2, Math.min(r0, r1) * 0.35));
+              for (let j = 1; j < n; j++) {
+                const f = j / n;
+                dot(q.x + (p.x - q.x) * f, q.y + (p.y - q.y) * f, r0 + (r1 - r0) * f);
+              }
+            }
+            dot(p.x, p.y, r1);
+          }
+          m.fill();
+
+          // black, then the photo placed exactly as the cartoon (contain, bottom centre), cut to the trail
+          g.fillStyle = "#000";
+          g.fillRect(0, 0, size, size);
+          const s = Math.min(size / photo.naturalWidth, size / photo.naturalHeight);
+          const w = photo.naturalWidth * s;
+          const h = photo.naturalHeight * s;
+          g.drawImage(photo, (size - w) / 2 + NUDGE_X * size, size - h + NUDGE_Y * size, w, h);
+          g.globalCompositeOperation = "destination-in";
+          g.drawImage(mask, 0, 0, size, size);
+          g.globalCompositeOperation = "source-over";
+        }
+
+        function frame() {
+          raf = 0;
+          const now = performance.now();
+          step(now);
+          draw(now);
+          // keep going while there's a trail to fade or the pointer just moved
+          if (trail.some((p) => p.t !== Infinity) || (target && now - target.t < 70)) raf = requestAnimationFrame(frame);
+        }
+        const kick = () => raf || (raf = requestAnimationFrame(frame));
+
+        // only movement paints: a resting (or clicking) pointer draws nothing, and the trail fades
+        portrait.addEventListener("pointermove", (e) => {
+          const box = portrait.getBoundingClientRect();
+          target = { x: e.clientX - box.left, y: e.clientY - box.top, t: performance.now() };
+          kick();
+        });
+        portrait.addEventListener("focus", () => {
+          if (!portrait.matches(":focus-visible")) return;
+          const r = (size * WIDTH) / 2;
+          trail = [0.3, 0.45, 0.6, 0.72].map((f, i) => ({ x: size * f, y: size * (0.38 + 0.02 * i), r, t: Infinity, start: i === 0 }));
+          kick();
+        });
+        portrait.addEventListener("blur", () => {
+          trail = [];
+          kick();
+        });
+        photo.addEventListener("load", kick);
+        new ResizeObserver(fit).observe(portrait);
+      })();
+    </script>
+  </body>
+</html>
