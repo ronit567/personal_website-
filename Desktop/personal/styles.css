@@ -566,15 +566,19 @@ html.plain .column {
   }
 }
 
-/* ---- Projects: two columns of cards, the clip on top and the write-up under it ---- */
+/* ---- Projects: two columns of cards, the clip on top and the write-up under it. Wider than
+   the page's column: the section runs nearly edge to edge, so the clips are big ---- */
 
 .projects-wrap {
+  --wide: min(1840px, 100% - 2 * clamp(24px, 4vw, 72px));
   padding-top: 0; /* shares the page text styles, not the page's top spacing */
   padding-bottom: 120px;
   animation: scene-in 0.7s ease-out both;
 }
 
 .projects-head {
+  width: var(--wide);
+  margin-inline: auto;
   margin-top: 36px; /* space above the line; margin + padding = 72px keeps the heading in place */
   border-top: 1px solid rgba(242, 238, 230, 0.35);
   padding-top: 36px;
@@ -584,8 +588,9 @@ html.plain .column {
   --line: 1px solid rgba(242, 238, 230, 0.14);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 80px 56px;
-  margin-block: 0;
+  gap: 96px clamp(32px, 4vw, 72px);
+  width: var(--wide);
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -597,7 +602,7 @@ html.plain .column {
 
 .project-visual {
   order: -1; /* the clip leads; the text stays first in the markup for screen readers */
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .project h3 {
@@ -687,12 +692,43 @@ html.plain .column {
 
 /* the picture: a diagram, covered by the real clip where there is one */
 .project-visual {
+  display: block; /* a link where the project has a repo, a div where it doesn't */
   position: relative;
   aspect-ratio: 16 / 9;
   border: var(--line);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background: #0b0b0c;
+  /* floating in space: starlight pools underneath, and the clip leans towards the pointer
+     (the page's script sets --rx and --ry) */
+  box-shadow: 0 36px 70px -48px rgba(128, 150, 255, 0.28);
+  transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--lift, 1));
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.4s,
+    border-color 0.4s;
+}
+
+.project-visual:hover {
+  --lift: 1.02;
+  border-color: rgba(242, 238, 230, 0.4);
+  box-shadow: 0 44px 84px -46px rgba(128, 150, 255, 0.45);
+  transition-duration: 0.18s, 0.4s, 0.4s; /* quick while it follows the pointer, slow to settle back */
+}
+
+/* a sheen where the pointer is */
+.project-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.14), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.project-visual:hover::after {
+  opacity: 1;
 }
 
 /* a chart drawn on white, flipped to sit dark like the others (hue-rotate keeps its colours) */
@@ -838,6 +874,10 @@ html.plain .column {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .project-visual {
+    transition: none;
+  }
+
   .project-art * {
     animation: none !important;
     stroke-dashoffset: 0 !important;

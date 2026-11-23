@@ -101,13 +101,15 @@
 
     </main>
 
+    <!-- Clicking a clip opens the project's repo: a mouse-only duplicate of the GitHub link in the
+         text, so it's kept out of the tab order and hidden from screen readers. -->
     <!-- four projects in two columns. Each has a small animated diagram of what it does, covered
          by a clip of the real thing where one exists. -->
     <section class="page projects-wrap" aria-labelledby="projects-title">
-      <div class="column projects-head">
+      <div class="projects-head">
         <h2 class="section-title" id="projects-title">Projects</h2>
       </div>
-      <ul class="projects column">
+      <ul class="projects">
         <li class="project">
           <div class="project-text">
             <h3>B.A.I.L.I.F.F.</h3>
@@ -122,7 +124,7 @@
               <a href="https://github.com/Western-Artificial-Intelligence/ai-law-agents" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
             </p>
           </div>
-          <div class="project-visual" aria-hidden="true">
+          <a class="project-visual" href="https://github.com/Western-Artificial-Intelligence/ai-law-agents" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
             <svg class="project-art art-bailiff" viewBox="0 0 320 180">
               <g class="verdicts">
                 <rect x="20" y="22" width="16" height="16" rx="3" />
@@ -214,7 +216,7 @@
               <text class="flip-count" x="300" y="166" text-anchor="end">verdict flipped</text>
             </svg>
             <video class="project-media" src="bailiff-verdict-flips.mp4" muted loop playsinline preload="none"></video>
-          </div>
+          </a>
         </li>
 
         <li class="project">
@@ -230,7 +232,7 @@
               <a href="https://github.com/ronit567/UFC_Siloutte" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
             </p>
           </div>
-          <div class="project-visual" aria-hidden="true">
+          <a class="project-visual" href="https://github.com/ronit567/UFC_Siloutte" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
             <svg class="project-art art-ghost" viewBox="0 0 320 180">
               <polygon class="cage" points="128,22 192,22 237,67 237,113 192,158 128,158 83,113 83,67" />
               <g class="fighters">
@@ -240,7 +242,7 @@
               </g>
             </svg>
             <video class="project-media" src="ufc.mov" muted loop playsinline preload="none"></video>
-          </div>
+          </a>
         </li>
 
         <li class="project">
@@ -256,9 +258,9 @@
               <a href="https://github.com/lblommesteyn/dataquest2026" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
             </p>
           </div>
-          <div class="project-visual" aria-hidden="true">
+          <a class="project-visual" href="https://github.com/lblommesteyn/dataquest2026" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
             <video class="project-media" src="rescuewindow.mp4" muted loop playsinline preload="none"></video>
-          </div>
+          </a>
         </li>
 
         <li class="project">
@@ -302,6 +304,28 @@
         );
         for (const video of document.querySelectorAll("video.project-media")) seen.observe(video);
       })();
+    </script>
+
+    <script>
+      // Project clips lean towards the pointer, with a soft sheen where it is (styles.css reads
+      // --rx / --ry / --gx / --gy). Mouse only, and not with reduced motion.
+      if (window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) {
+        for (const visual of document.querySelectorAll(".project-visual")) {
+          visual.addEventListener("pointermove", (e) => {
+            const box = visual.getBoundingClientRect();
+            const x = (e.clientX - box.left) / box.width;
+            const y = (e.clientY - box.top) / box.height;
+            visual.style.setProperty("--ry", `${(x - 0.5) * 8}deg`);
+            visual.style.setProperty("--rx", `${(0.5 - y) * 8}deg`);
+            visual.style.setProperty("--gx", `${x * 100}%`);
+            visual.style.setProperty("--gy", `${y * 100}%`);
+          });
+          visual.addEventListener("pointerleave", () => {
+            visual.style.removeProperty("--rx");
+            visual.style.removeProperty("--ry");
+          });
+        }
+      }
     </script>
 
     <script>
