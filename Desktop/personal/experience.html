@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#000000" />
-    <title>Work | Ronit Longia</title>
+    <title>Experience | Ronit Longia</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..600&display=swap" />
@@ -51,7 +53,7 @@
         </a>
         <span class="divider" aria-hidden="true"></span>
         <a class="page-link" href="experience.html" aria-current="page">
-          Work
+          Experience
           <svg class="forward" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
@@ -93,7 +95,7 @@
 
       <!-- the cartoon; moving the pointer over it paints a stroke that shows the real photo -->
       <div class="portrait" id="portrait" tabindex="0">
-        <img src="picture.png" alt="Cartoon of Ronit working on a laptop" />
+        <img src="picture.webp" alt="Cartoon of Ronit working on a laptop" />
         <canvas aria-hidden="true"></canvas>
       </div>
 
@@ -211,7 +213,7 @@
               <text x="20" y="166">same case, new name</text>
               <text class="flip-count" x="300" y="166" text-anchor="end">verdict flipped</text>
             </svg>
-            <video class="project-media" src="bailiff-verdict-flips.mp4" muted loop playsinline autoplay></video>
+            <video class="project-media" src="bailiff-verdict-flips.mp4" muted loop playsinline preload="none"></video>
           </div>
         </li>
 
@@ -237,7 +239,7 @@
                 <line class="strike" x1="146" y1="90" x2="174" y2="90" />
               </g>
             </svg>
-            <video class="project-media" src="ufc.mov" muted loop playsinline autoplay></video>
+            <video class="project-media" src="ufc.mov" muted loop playsinline preload="none"></video>
           </div>
         </li>
 
@@ -255,7 +257,7 @@
             </p>
           </div>
           <div class="project-visual" aria-hidden="true">
-            <video class="project-media" src="rescuewindow.mp4" muted loop playsinline autoplay></video>
+            <video class="project-media" src="rescuewindow.mp4" muted loop playsinline preload="none"></video>
           </div>
         </li>
 
@@ -279,11 +281,28 @@
               <text x="296" y="162" text-anchor="end">3-bit</text>
               <text class="bits" x="160" y="162" text-anchor="middle">fewer bits →</text>
             </svg>
-            <img class="project-media on-white" src="intact_animation.gif" alt="" />
+            <img class="project-media on-white" src="intact_animation.gif" alt="" loading="lazy" />
           </div>
         </li>
       </ul>
     </section>
+
+    <script>
+      // Project clips download and play only once they're on (or near) the screen, so the page
+      // doesn't fetch every video up front; off screen they pause.
+      (() => {
+        const seen = new IntersectionObserver(
+          (entries) => {
+            for (const { target, isIntersecting } of entries) {
+              if (isIntersecting) target.play().catch(() => {});
+              else target.pause();
+            }
+          },
+          { rootMargin: "200px" }
+        );
+        for (const video of document.querySelectorAll("video.project-media")) seen.observe(video);
+      })();
+    </script>
 
     <script>
       // Home: the page clears, leaving the stars; the home page opens up here and comes back down
@@ -325,7 +344,7 @@
         const mask = document.createElement("canvas");
         const m = mask.getContext("2d");
         const photo = new Image();
-        photo.src = "real-cutout.png";
+        photo.src = "real-cutout.webp";
 
         let size = 0;
         let trail = []; // { x, y, r, t, start }: r = brush radius, t = birth time (Infinity: never fades)

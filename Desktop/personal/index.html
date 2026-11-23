@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#141d38" />
     <title>Ronit Longia</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..600&display=swap" />
     <link rel="stylesheet" href="styles.css" />
     <!-- fetched ahead, so the work page is ready the moment the trip up ends -->
     <link rel="prefetch" href="experience.html" />
+    <link rel="prefetch" href="picture.webp" as="image" />
     <script>
       // arriving from the work page: start up in space, then come down (script at the end of the page)
       try {
@@ -53,7 +56,7 @@
         </a>
         <span class="divider" aria-hidden="true"></span>
         <a class="page-link" href="experience.html">
-          Work
+          Experience
           <svg class="forward" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
@@ -153,7 +156,8 @@
           ascent.append(cloud);
         }
 
-        const link = document.querySelector('a.page-link[href="experience.html"]');
+        // not by its href: hosts with pretty URLs rewrite that (experience.html becomes /experience)
+        const link = document.querySelector(".links .page-link");
         let timer = 0;
         const go = () => {
           if (!timer) return;

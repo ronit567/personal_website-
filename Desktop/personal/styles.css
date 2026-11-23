@@ -32,7 +32,7 @@ body {
 .scene {
   display: block;
   z-index: -2;
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 /* Darkens the top for text, softens the corners, and adds a little film grain. */
@@ -186,7 +186,7 @@ html.plain .column {
   display: flex;
   align-items: center;
   padding-top: 16px;
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 .links {
@@ -235,18 +235,18 @@ html.plain .column {
 .icon-link {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
 }
 
 .icon-link svg {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 }
 
 .divider {
   width: 1px;
-  height: 20px;
+  height: 24px;
   margin: 0 8px;
   background: rgba(226, 230, 248, 0.2);
 }
@@ -255,14 +255,15 @@ html.plain .column {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 40px;
+  height: 46px;
   padding: 0 10px;
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .page-link svg {
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   transition: transform 0.2s;
 }
 
@@ -278,10 +279,30 @@ html.plain .column {
 @media (max-width: 420px) {
   .links {
     gap: 0;
+    margin-right: -6px;
+  }
+
+  .back-link {
+    margin-left: -6px;
   }
 
   .icon-link {
-    width: 36px;
+    width: 34px;
+  }
+
+  .icon-link svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .page-link {
+    padding: 0 6px;
+    font-size: 15px;
+  }
+
+  .page-link svg {
+    width: 16px;
+    height: 16px;
   }
 
   .divider {
@@ -301,7 +322,7 @@ html.plain .column {
   line-height: 1.4;
   color: rgba(226, 230, 248, 0.75);
   text-shadow: var(--text-halo);
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 .contributions[hidden] {
@@ -333,7 +354,7 @@ html.plain .column {
 .intro {
   padding-top: 4px;
   padding-left: 32px;
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 .intro p {
@@ -369,7 +390,7 @@ html.plain .column {
 /* A page of text over the sky */
 .page {
   padding-top: 72px;
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 .page h1 {
@@ -408,8 +429,8 @@ html.plain .column {
 
 .exp {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
-  gap: 32px 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 470px);
+  gap: 32px 48px;
   align-items: center;
   padding-top: 20px; /* compact, so the first projects already show without scrolling */
 }
@@ -550,7 +571,7 @@ html.plain .column {
 .projects-wrap {
   padding-top: 0; /* shares the page text styles, not the page's top spacing */
   padding-bottom: 120px;
-  animation: scene-in 1.6s ease-out both;
+  animation: scene-in 0.7s ease-out both;
 }
 
 .projects-head {
